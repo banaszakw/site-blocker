@@ -16,7 +16,7 @@ class AppModel:
         self.head = r"# BEGIN {}".format(self.app_name)
         self.foot = r"# END {}".format(self.app_name)
 
-    def read_file(self) -> List[str]:  # OK
+    def read_file(self) -> List[str]:
         """Czyta wiersz po wierszu plik `hosts`, usuwa białe znaki, pobiera
         z niego wiersze pomiędzy znacznikami `BEGIN` i `END` (nie pobiera
         znaczników). Zwraca listę z wierszami.
@@ -35,13 +35,13 @@ class AppModel:
                     lines.append(line)
         return lines
 
-    def extract_sites(self, lines: List[str]) -> List[Tuple[bool, str, str]]:  # OK
+    def extract_sites(self, lines: List[str]) -> List[Tuple[bool, str, str]]:
         """ Dla każdego elementu listy wywołuje `extract_data`, która konwertuje
         go na krotkę. Ta funkcja usuwa elementy None."""
         sites: Tuple[bool, str, str] or None = map(self.extract_data, lines)
         return [s for s in sites if s is not None]
 
-    def extract_data(self, s: str) -> Tuple[bool, str, str] or None:  # OK
+    def extract_data(self, s: str) -> Tuple[bool, str, str] or None:
         """ Pomocnicza funkcja dla `extract_sites`. Z podanej lini pliku hosts
         wyodrębnia `#` (jeśli jest), dwa adresy strony (jeśli nie znajdzie
         ktoregoś, zastąpi je pustym stingiem) i zwraca je jako krotkę.
@@ -61,13 +61,11 @@ class AppModel:
                 blocked: bool = True
             lin: List[str] = sorted((m.group(4), m.group(6)),
                                     key=lambda i: i.startswith("www."))
-            # lin.insert(0, blocked)
-            # lin = (blocked,) + tuple(lin)
             return blocked, lin[0], lin[1]
         except AttributeError:
             return None
 
-    def validate_data(self, inp: str) -> bool:  # OK
+    def validate_data(self, inp: str) -> bool:
         """ Sprawdza poprawnośc wprowadzonych danych: 1) czy zaczyna się od
         znaków alfabetycznych 2) czy zawierają dozwolone znaki: alfanumeryczne,
         podkreślnik, kropkę, dywiz, c. Zwraca True lub False.
@@ -79,7 +77,7 @@ class AppModel:
                 return True
         return False
 
-    def complete_user_input(self, inp: str) -> Tuple[str, str]:  # OK
+    def complete_user_input(self, inp: str) -> Tuple[str, str]:
         """ Sprawdza, czy adres strony rozpoczyna się od `wwww.`. Jeśli nie,
         dodaje go, jeśli tak, usuwa. Zwraca zawsze dwuelementową krotkę:
         (adres.com, www.adres.com).
@@ -90,7 +88,7 @@ class AppModel:
         else:
             return inp, "www." + inp
 
-    def write_file(self, all_sites: List[Tuple[str, str]],  # OK
+    def write_file(self, all_sites: List[Tuple[str, str]],
                    sel: Tuple[int, ...]) -> None:
         """ Zapisuje dane do pliku hosts. Wcześniej czyści plik hosts między
         znacznikami `BEGIN` i `END`. (włącznie ze znacznikami). """
@@ -110,11 +108,7 @@ class AppModel:
                     # https://stackoverflow.com/a/33973612
             fw.write(self.foot + '\n')
 
-    # def sort_line(self, line):
-    #     line[1:] = sorted(line[1:])
-    #     return line
-
-    def clear_hosts_file(self) -> None:  # OK
+    def clear_hosts_file(self) -> None:
         """ Usuwa wiersze pomiędzy znacznikami `BEGIN` i `END` włacznie z samymi
         liniami ze znacznikami.
         """

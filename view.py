@@ -38,21 +38,21 @@ class AppView:
         self.root.mainloop()
 
     @property
-    def sel_sites(self) -> Tuple[int, ...]:  # OK
+    def sel_sites(self) -> Tuple[int, ...]:
         """Pobiera krotkę z indeksami zaznaczonych pozycji na liście w widżecie
         Listbox.
         """
         return self.listbox.curselection()
     
     @property
-    def all_sites(self) -> List[Tuple[str, str]]:  # OK
+    def all_sites(self) -> List[Tuple[str, str]]:
         """Pobiera zawartość listy z widżetu Listbox. Dzieli każdy element listy
         na podstawie spacji i zwraca krotkę.
         """
         return [tuple(site.split()) for site in self.listbox.get('0', tk.END)]
 
     @property
-    def user_input(self) -> str:  # OK
+    def user_input(self) -> str:
         """Pobiera tekst wprowadzony przez użytkownika."""
         return self.site.get()
 
@@ -68,7 +68,7 @@ class AppView:
         self.entry.focus()
         frame.pack(expand=0, fill=tk.X)
 
-    def add_to_listbox(self, sel: bool, elem: Tuple[str, str]) -> None:  # OK
+    def add_to_listbox(self, sel: bool, elem: Tuple[str, str]) -> None:
         """Dodaje listę z parą adresów (xxx.com i www.xxx.com) wprowadzoną przez
         użytkownika do widżetu Listbox i zaznacza wprowadzona pozycję jako
         aktywną. Sprawdza, czy pierwszy element listy jest dłuższy niż 16 znków,
@@ -85,7 +85,7 @@ class AppView:
         self.entry.delete(0, 'end')
         self.entry.focus()
 
-    def delete_from_listbox(self) -> None:  # OK
+    def delete_from_listbox(self) -> None:
         """Usuwa zaznaczone elementy z widżetu Listbox. Najpierw pobiera krotkę
         z indeksami zaznaczonych elementów, odwraca kolejność w krotce i kasuje
         elementy od tyłu, aby indeksy się nie zmieniły.
@@ -122,7 +122,7 @@ class AppView:
         messagebox.showerror(title=self.labels['err'], message=msg)
         return 'break'
 
-    def load_from_file(self, sites: List[Tuple[bool, str, str]]):  # OK
+    def load_from_file(self, sites: List[Tuple[bool, str, str]]):
         """Ładuje zawrtość listy do widżetu Listbox. W tym celu najpierw sortuje
         liste alfabetycznie wg adresu strony bez `www.`, dodaje do widżetu
         Listbox tylko adresy (alist[1:3]), a na podstawie wartosci bool
